@@ -10,13 +10,14 @@ go:
 #     - hugo
 
 install:
-# 安装最新的hugo
+  # 安装最新的hugo
   - wget https://github.com/gohugoio/hugo/releases/download/v0.51/hugo_0.51_Linux-64bit.deb
   - sudo dpkg -i hugo*.deb
-  - git clone https://github.com/Mogeko/hugo-hello-programmer-theme.git themes/hugo-hello-programmer-theme
+  # 安装主题
+  - git clone https://github.com/Mogeko/LeaveIt.git themes/LeaveIt
 
 # befor_script:
-#   - git clone https://github.com/Mogeko/hugo-hello-programmer-theme.git themes/hugo-hello-programmer-theme
+#   - git clone https://github.com/Mogeko/LeaveIt.git themes/LeaveIt
 
 script:
 # 运行hugo命令
