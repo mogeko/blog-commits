@@ -15,7 +15,7 @@ install:
   - sudo dpkg -i hugo*.deb
 
 befor_script:
-  git clone https://github.com/Mogeko/hugo-hello-programmer-theme.git themes/hugo-hello-programmer-theme
+  - git clone https://github.com/Mogeko/hugo-hello-programmer-theme.git themes/hugo-hello-programmer-theme
 
 script:
 # 运行hugo命令
