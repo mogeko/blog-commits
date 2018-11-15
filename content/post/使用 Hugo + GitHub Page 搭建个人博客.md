@@ -1,0 +1,276 @@
+---
+title: "使用 Hugo + GitHub Page 搭建个人博客"
+date: 2018-08-05T22:04:23+08:00
+draft: false
+---
+
+正如你所看到的，本博客换了一个主题。但你们看不到的是，本博客将静态页面生成引擎换成了 [Hugo](https://github.com/gohugoio/hugo)
+
+Hugo 和 Hexo 一样，是一种通用的网站框架。严格来说，这类应用应该被称作静态网站生成器。这类应用将 Markdown 文件和主题一起编译成由 HTML、CSS、JavaScript 组成的静态网页。然后上传到 GitHub 上，通过 GitHub 提供的静态页面托管服务 (GitHub Page) 进行访问。
+
+这里就写一篇文章来记录一下踩过的坑。
+
+本站目前使用的主题是 [Hello Programmer](https://themes.gohugo.io/hugo-hello-programmer-theme/)，要配合 Hugo 使用。今后会写一篇文章来详细介绍。
+
+<!--more-->
+
+# 准备工作
+- 一个 Github 账号。 <- 我们要使用它提供的 Github Pages 服务来搭建博客 <https://github.com/>
+- Hugo <- 博客框架，将 Markdown 文档渲染成网页 <https://github.com/gohugoio/hugo>
+- Git <- 用来发布博客 <https://git-scm.com/>
+# 正文
+## 安装 Git
+**如果已经装好了 Git 的同学可以跳过了**
+与 Hexo 一样，Hugo 也需要使用 Git 进行发布。
+
+首先去官网下载各自的安装包。[官网](https://git-scm.com/)
+Git 的官网是英文的，点 [Downloads for Windows] 下载。
+
+下载好后，双击安装包，就像安装普通软件一样安装。
+
+安装好后打开按 Win 键 + R，输入 cmd，回车。
+
+在弹出的黑框框中输入
+
+```shell
+git version
+```
+
+如果显示的是 Git 的版本号，说明安装成功
+
+![check](check.png)
+
+## 注册 Github 账号
+关于 GitHub 账号的注册方法，我在[以前的文章]()中有介绍过的，这里再写一遍
+
+
+
+**如果你已经拥有 GitHub 账号，请跳过**
+打开 <https://github.com/> 分别填上 `名字`，`邮箱`，`密码` 点 `Sign up to GitHub`
+
+![注册 Github 账号](https://mogeko.github.io/2017/08/20/%E4%BD%BF%E7%94%A8-Github-Hexo-%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/github_1.png)
+然后前往自己刚才填写的邮箱，点开 Github 发送给你的注册确认信，确认注册
+
+## 创建代码库
+
+登陆之后，点击页面右上角的加号，选择 `New repository`
+
+![创建代码库](https://mogeko.github.io/2017/08/20/%E4%BD%BF%E7%94%A8-Github-Hexo-%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/github_2.png)
+
+在 `Repository name` 下填写 `[你的名字].github.io`（填写注册时的名字，英文），`Description (optional)` 下填写一些简单的描述（不写也没有关系）
+
+![创建代码库](https://mogeko.github.io/2017/08/20/%E4%BD%BF%E7%94%A8-Github-Hexo-%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/github_3.png)
+
+然后你会看到
+
+![创建代码库](https://mogeko.github.io/2017/08/20/%E4%BD%BF%E7%94%A8-Github-Hexo-%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/github_4.png)
+
+选择右侧的 Settings，向下拖动，直到看见 GitHub Pages
+
+![创建代码库](https://mogeko.github.io/2017/08/20/%E4%BD%BF%E7%94%A8-Github-Hexo-%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/github_5.png)
+点击 `Automatic page generator`，Github 将会自动替你创建出一个 gh-pages 的页面。 如果你的配置没有问题，那么大约 15 分钟之后，`[你的名字].github.io` 这个网址就可以正常访问了
+
+
+## Hugo
+
+既然 Hugo 与 Hexo 一样，是用来渲染网页的。那为何我要放弃成熟稳定的 Hexo，换成 Hugo 呢？
+
+主要是出于以下考虑：
+
+1. Hugo 基于 go 开发，理论上来说比 Hexo 更快
+2. 同样是得益于 go，Hugo 可以很轻松的被编译成二进制文件安装、运行。不必像 Hexo 一样依赖 Node.js，也不必安装一堆依赖。
+3. [Hello Programmer](https://themes.gohugo.io/hugo-hello-programmer-theme/) 好看啊！！！(其实以前的主题 (NexT) 也很好看，只是用了快两年了，有点审美疲劳了。想换个新感觉🤔)
+
+但同时，使用 Hugo也是有风险的：
+
+1. Hugo 更年轻，sometimes naive，无论功能性还是稳定性都不如 Hexo
+2. 适用于 Hugo 的主题比较少，也没有像 NexT 那样功能强大，成熟稳定的主题
+3. 开工前我最担心的就是评论系统。后来证实，果然是个大坑 /_(:з」∠)/_
+
+综上所述，想要用 Hugo 的话一定要做好踩坑的心理准备，还要记得千万要做好备份。
+
+### 安装
+
+在[这个页面](https://github.com/gohugoio/hugo/releases)选择适合的版本下载就可以了
+
+下载好后解压，将解压出来的可执行文件 (格式为 .exe)，放到自己喜欢的目录下。直接可以使用，不需要安装
+
+但要记住一定要将你选择的文件夹路径加入到环境变量 `PATH` 中。
+
+#### 如何设置环境变量 `PATH`
+
+#### 使用 Chocolatey 安装
+
+Hugo 也提供了 Chocolatey 安装包，用户也可以通过 Chocolatey 安装 Hugo。
+
+使用管理员权限打开 cmd，然后执行
+
+```shell
+choco install hugo -y
+```
+
+### 初始化
+
+下面，初始化我们的 Hugo
+我们首先需要选择一个路径来存放我们的博客，在你选好的路径下执行
+
+```shell
+hugo new site myBlog
+```
+这条命令会创建一个名为 `myBlog` (你也可以使用你喜欢的任意名字)  的文件夹来存放你的博客。执行 `cd myBlog` 进入文件夹。
+
+此时的目录结构应该是这样的
+
+> .  
+> ├── archetypes # 内容类型，在创建新内容时自动生成内容的配置  
+> ├── content # 网站内容，Markdown 文件  
+> ├── data  
+> ├── layouts # 网站模版，选择主题后会将主题中的 `layouts` 文件夹中的内容复制到此文件夹中  
+> ├── static # 包含 CSS、JavaScript、Fonts、media 等，决定网站的外观。选择主题后会将主题中的 `ststic` 文件夹中的内容复制到此文件夹中  
+> ├── themes # 存放主题文件  
+> └── config.toml # 网站的配置文件  
+
+### 安装主题
+
+本站使用的主题是 [Hello Programmer](https://themes.gohugo.io/hugo-hello-programmer-theme/)
+
+在博客根目录下执行命令
+
+```shell
+cd themes
+git clone https://github.com/lubang/hugo-hello-programmer-theme
+```
+
+### 创建新页面
+
+创建一个新页面
+
+```shell
+hugo new about.md
+```
+
+此时 `content` 文件夹下就多了一个 `about.md` 文件，打开文件就可以看到时间、文件名等信息已经自动生成了
+
+```
+---
+title: "About"
+date: 2018-08-05T20:56:47+08:00
+draft: true
+---
+
+```
+
+两条 `---` 间的信息是文章的配置信息，有的信息是自动生成的 (如：`title`、`date` 等)，简单介绍以下各项配置
+
+
+> \# 以下项目是自动生成的  
+> `title: ` # 文章标题  
+> `date: ` # 写作时间  
+> `draft: ` # 是否为草稿，如果为 `true` 需要在命令中加入 `--buildDrafts` 参数才会生成这个文档  
+>
+> \# 以下项目需要自行添加  
+> `description: ` # 描述  
+> `tags: ` # 标签，用于文章分类  
+
+`自动生成` 和 `执行添加` 的内容并不是绝对的，你可以根据自己的喜好配置模板文件 `archetypes/default.md`
+
+### 配置 `config.toml`
+
+`config.toml` 用于存放整个网站的配置信息。
+
+以下是我整理的一个 `config.toml` 模板，按照需求更改
+
+```toml
+baseURL = "https://mogeko.github.io" # <head> 里面的 baseurl 信息，填你的博客地址
+ languageCode = "cn-ZH" # 博客的语言。有点主题没有做国际化优化，菜单等没有翻译成中文就不要太较真了
+title = "Mogeko`s Blog" # 浏览器的标题
+copyright = "" # 版权说明
+theme = "HelloProgrammer" # 主题 (需要自己下载)
+
+# Google 统计
+googleAnalytics = "UA-104502658-1" # Google 统计 id
+
+# 代码高亮
+# Hugo 使用内置的 Chroma 提供代码高亮，详情：http://gohugo.io/content-management/syntax-highlighting/
+#pygmentsUseClassic=true # 使用 Pygments 提供代码高亮
+pygmentsCodeFences = false # 开启代码高亮
+pygmentsStyle = "monokai" # 代码高亮主题，可供选择的主题有：native、vim、fruity、monokai
+pygmentsUseClasses=true # 使用自定义的代码高亮样式
+PygmentsCodefencesGuessSyntax = true
+PygmentsOptions = "linenos=table"
+
+[author]
+  author = "Mogeko" # 作者名字
+  email = "zhengjunyi@live.com"
+
+[params]
+  since = "2017" # 站点建立时间
+  copyrightyear = "2018" # Copyright 年份 (不好解释，反正填今年就对了)
+  description = "Mogeko 的个人博客" # (Meta) 描述
+
+  # 以下设置需要自己改代码，详细步骤我以后会出文章详细说明的
+  ## 一些全局开关，你也可以在每一篇内容的 front matter 中针对单篇内容关闭或开启某些功能，在 archetypes/default.md 查看更多信息。
+  toc = false # 是否开启目录
+  #mathjax = false # 是否使用mathjax（数学公式）
+  #contentCopyright = '<a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a>'
+
+  ## 评论系统。
+  [params.gitalk] # Github: https://github.com/gitalk/gitalk
+    clientId = "936cecdd2ab935870ca5" # Your client ID
+    clientSecret = "39cfc7a3cb9a974b6609f3fdaa637e2917e3e40a" # Your client secret
+    repo = "mogeko.github.io" # The repo to store comments
+    owner = "Mogeko" # Your GitHub ID
+    admin= "Mogeko" # Required. Github repository owner and collaborators. (Users who having write access to this repository)
+    id= "location.pathname" # The unique id of the page.
+    labels= "gitalk" # Github issue labels. If you used to use Gitment, you can change it
+    perPage= 15 # Pagination size, with maximum 100.
+    pagerDirection= "last" # Comment sorting direction, available values are 'last' and 'first'.
+    createIssueManually= false # If it is 'false', it is auto to make a Github issue when the administrators login.
+    distractionFreeMode= false # Enable hot key (cmd|ctrl + enter) submit comment.
+
+```
+
+### 生成网站
+
+设置完 `config.toml` 后我们执行以下命令
+
+```shell
+hugo server --buildDrafts -w
+```
+
+此时你就可以在 `http://localhost:1313` 访问到你的博客了
+
+> 简单介绍一下两个参数：
+> - `--buildDrafts`: 生成被标记为 「草稿」 的文档
+> - `-w`: 监控更改，如果发生更改直接显示到博客上 (非常有用，这也是我最喜欢的一点特性了)
+
+但此时只能在本地访问 (相当于预览博客，如果与期望值不符，可以随时更改)，如果想发布到 `Github Page` 上需要先将文章配置信息中的 `draft:` 改为 `false`
+然后执行命令
+
+```shell
+hugo
+```
+
+此时你的博客目录下会多出一个 `public` 文件夹来。这便是 Hugo 生成的网站
+
+### 发布
+
+不像 Hexo，Hugo 并没有提供自动发布到 `GitHub Page` 的功能。需要将 `public` 中的内容手动上传到 Github 上。
+
+首先执行命令 `cd public` 进入到 `public` 文件夹中  
+然后执行
+
+```shell
+git init
+git remote add origin https://github.com/[Github 用户名]/[Github 用户名].github.io.git
+git add -A
+git commit -m "[介绍，随便写点什么，比如日期]"
+git push -u origin master
+```
+第一次发布需要执行的命令多一点，以后发布只需要执行
+
+```shell
+git add -A
+git commit -m "[介绍，随便写点什么，比如日期]"
+git push -u origin master
+```

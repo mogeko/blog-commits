@@ -1,0 +1,115 @@
+---
+title: "Ubuntu 升级到 17.10"
+date: 2017-12-02T18:00:00+08:00
+draft: false
+tags: ["Ubuntu"]
+---
+
+![Logo](https://mogeko.github.io/post/ubuntu-%E5%8D%87%E7%BA%A7%E5%88%B0-17-10/logo.png)
+
+Ubuntu 17.10 已经发布了一段时间了，作为 18.04 的预览（热）版。带来了一大波新特性。
+
+其中最重要也是最令我揪心的是 Ubuntu 将放弃 Unity 回归 Gnome。对于我们这些习惯了 Unity 的用户来说，这个决定简直蠢到家了。虽然 Unity 是丑了点，但比 Gnome 好用到不知道那里去了！这也是我迟迟没有升级的主要原因。
+
+目前 **Ubuntu 17.10 不是长期支持版本（LTS）！！！**
+
+<!--more-->
+
+# 正文
+
+Ubuntu 官方推荐的升级策略是“依次升级”。**较低**的版本想要升级到**最高**的版本，需要想升级到**较高**的版本，再从**较高**的版本升级到**最高**的版本。也就是说 16.10 想要升级到 17.10 需要先升级到 17.04。
+
+- 16.04 -> 16.10 -> 17.04 -> 17.10
+
+每个版本中的升级方法都是相似的。这里介绍两种比较安全的升级方法
+
+**强烈建议升级前先备份！！！** -> [如何备份 Ubuntu](http://www.jianshu.com/p/b73e8011b828)
+
+## 小白最爱的升级方法（无脑下一步）
+
+在 Dash 中搜索并启动 Update Manager
+
+![Update Manager](https://mogeko.github.io/post/ubuntu-%E5%8D%87%E7%BA%A7%E5%88%B0-17-10/Upgrade_1.png)
+
+选择更新选项卡 (Updates)，然后在窗口底部，将通知设置从 “长期支持版本”(For long-term support version) 更改为任何新版本 (For any new version)。
+
+![Update Manager](https://mogeko.github.io/post/ubuntu-%E5%8D%87%E7%BA%A7%E5%88%B0-17-10/Upgrade_2.png)
+
+等了一会儿，系统会通知你有新的发行版可用
+
+![New Distribution](https://mogeko.github.io/post/ubuntu-%E5%8D%87%E7%BA%A7%E5%88%B0-17-10/Upgrade_3.png)
+
+- 如果不想等，可以在命令行中输入命令：
+
+  ```
+  sudo do-release-upgrade -d
+  ```
+
+  这个命令可以强制搜索新的版本
+
+然后输入您的密码。 出现发行说明窗口。 点击升级（Upgrade）。
+
+![New Distribution](https://mogeko.github.io/post/ubuntu-%E5%8D%87%E7%BA%A7%E5%88%B0-17-10/Upgrade_4.png)
+
+现在只需要等升级就可以了，升级完成后会自动重启。
+
+![Upgrade](https://mogeko.github.io/post/ubuntu-%E5%8D%87%E7%BA%A7%E5%88%B0-17-10/Upgrade_5.png)
+
+## 使用命令行升级 Ubuntu
+
+首先，打开终端窗口并运行以下命令升级现有软件。
+
+```
+sudo apt update && sudo apt dist-upgrade
+```
+
+然后确保您安装了 update-manager-core 软件包。
+
+```
+sudo apt install update-manager-core
+```
+
+接下来，使用 nano 或您首选的命令行文本编辑器编辑配置文件。
+
+```
+sudo nano /etc/update-manager/release-upgrades
+```
+
+在此文件的底部，将提示值从`lts` 更改为 `normal`。
+
+```
+Prompt=normal
+```
+
+保存并关闭文件。 之后，运行以下命令开始升级过程。
+
+```
+do-release-upgrade
+```
+
+同样的，升级完成后会自动重启。
+
+## 查看 Ubuntu 版本（验证是否升级成功）
+
+验证是否升级成功，只需要在命令行中运行：
+
+```
+lsb_release -a
+```
+
+输出:
+
+```
+No LSB modules are available.
+Distributor ID:	Ubuntu
+Description:	Ubuntu 17.10
+Release:	17.10
+Codename:	artful
+```
+
+
+
+
+<br>
+
+<center>  ·End·  </center>
