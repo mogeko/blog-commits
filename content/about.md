@@ -1,5 +1,5 @@
 +++
-title = "About Me"
+title = "Mogeko"
 date = "2017-08-12"
 menu = "main"
 +++
