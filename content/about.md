@@ -4,7 +4,7 @@ date = "2017-08-12"
 menu = "main"
 +++
 
-Mogeko is a student.
+A madman who wants to devoting his life to the free software movement.
 
 Contact me:
 
