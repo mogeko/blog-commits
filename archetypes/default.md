@@ -6,9 +6,9 @@ tags: [""]
 categories: [""]
 ---
 <!-- 
-<img alt="" src="" >
+<img alt="" src="https://mogeko.github.io/images/{{ replace .Name "-" " " | title }}/" >
 <span class="spoiler" ></span>
-<br>
+&emsp;&emsp;
  -->
 
 
