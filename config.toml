@@ -1,6 +1,7 @@
 baseURL = "https://mogeko.github.io" # <head> 里面的 baseurl 信息，填你的博客地址
 title = "Mogeko`s Blog" # 浏览器的标题
 languageCode = "zh-cn"
+hasCJKLanguage = true
 theme = "LeaveIt" # 主题 (需要自己下载)
 
 paginate = 11 # 每页的文章数
