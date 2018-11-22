@@ -3,7 +3,7 @@ title = "Mogeko`s Blog" # 浏览器的标题
 languageCode = "zh-cn"
 theme = "LeaveIt" # 主题 (需要自己下载)
 
-paginate = 12 # 每页的文章数
+paginate = 11 # 每页的文章数
 enableEmoji = true # 支持 Emoji
 enableRobotsTXT = true # 支持 robots.txt
 googleAnalytics = "UA-104502658-1" # Google 统计 id
