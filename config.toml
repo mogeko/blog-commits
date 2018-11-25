@@ -1,7 +1,7 @@
 baseURL = "https://mogeko.github.io" # <head> 里面的 baseurl 信息，填你的博客地址
 title = "Mogeko`s Blog" # 浏览器的标题
-languageCode = "zh-cn"
-hasCJKLanguage = true
+languageCode = "zh-cn" # 语言
+hasCJKLanguage = true # 开启可以让「字数统计」统计汉字
 theme = "LeaveIt" # 主题 (需要自己下载)
 
 paginate = 11 # 每页的文章数
@@ -51,8 +51,8 @@ preserveTaxonomyNames = true
 
     google_verification = ""
 
-    description = "" # site description
-    keywords = "" # site keywords
+    description = "Mogeko 的个人博客" # (Meta) 描述
+    keywords = "blog, KMS, Hugo, GNU/Linux, Linux, Ubuntu, Rusty Lake: Roots, Hollow Knight, 空洞骑士" # site keywords
 
     beian = ""
     baiduAnalytics = ""
